@@ -1,0 +1,2 @@
+Fixture content is original Flintglade test infrastructure and is released
+under CC0-1.0 for testing and reproducibility.
