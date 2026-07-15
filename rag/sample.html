@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Flintglade RAG provenance fixture</title>
+  <link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+</head>
+<body>
+  <main>
+    <h1>Deterministic corpus packaging</h1>
+    <p>This Flintglade-controlled fixture demonstrates a small source document for reproducible retrieval-augmented generation corpus packaging. It contains only synthetic instructional prose and is dedicated to the public domain under CC0 1.0.</p>
+    <h2>Provenance requirements</h2>
+    <p>A useful corpus record preserves the source locator, retrieval hash, declared rights basis, extraction method, page boundary, and chunking version. Stable identifiers must exclude timestamps, run identifiers, retry counts, and other observation metadata so unchanged source material produces unchanged records.</p>
+    <ul>
+      <li>Fetch only the explicit source selected by the user.</li>
+      <li>Reject unsafe redirects and oversized responses before admission.</li>
+      <li>Keep each chunk linked to its source page and evidence locator.</li>
+    </ul>
+    <h2>Deterministic chunking example</h2>
+    <p>Character chunking advances by the configured size minus overlap. A chunk identifier combines the stable page identifier, chunker version, ordinal, and canonical text hash. Exact duplicate pages point to the first admitted page and do not create a second paid corpus unit. Similar but distinct pages remain separate because version one performs exact deduplication only.</p>
+    <pre><code>step = chunk_size - overlap
+chunk_id = sha256(page_id + version + ordinal + text_hash)</code></pre>
+    <h2>Portable manifest fields</h2>
+    <table>
+      <thead><tr><th>Field</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>pageId</td><td>Stable identity for the extracted page.</td></tr>
+        <tr><td>canonicalHash</td><td>Detects exact content changes and duplicates.</td></tr>
+        <tr><td>rightsBasis</td><td>Records the user's explicit declaration and evidence.</td></tr>
+        <tr><td>chunkIds</td><td>Links every generated child chunk to the paid page.</td></tr>
+      </tbody>
+    </table>
+    <p>The resulting manifest is a machine-readable index rather than a legal opinion or factual endorsement. A downstream RAG developer can compare page hashes between package versions, invalidate chunks whose parent page changed, and retain unchanged chunk identifiers without relying on generated summaries or synthetic citations.</p>
+  </main>
+  <footer class="fixture-footer">Controlled fixture footer that may be removed with an explicit selector.</footer>
+</body>
+</html>
